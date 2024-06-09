@@ -1,0 +1,16 @@
+/* Ajoute tes styles personnalisés ici */
+
+.card-title a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.card-title a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.img-fluid {
+    max-height: 400px;
+    object-fit: cover;
+}

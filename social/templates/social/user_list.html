@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container my-4">
+        <h1>Utlisateurs à suivre</h1>
+        {% for user in users %}
+            {% if user.id not in following_ids %}
+                <div class="card shadow px-4 py-2 my-1">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            {% if user.avatar %}
+                                <img class="avatar img-thumbnail rounded-circle" src="{{ user.avatar.url }}" width="60px" height="60px">
+                            {% else %}
+                                <img class="avatar img-thumbnail rounded-circle" src="{% static 'images/default_profile.png' %}" width="60px" height="60px">
+                            {% endif %}
+                            <span class="mx-2"><strong>{{ user.username }}</strong></span>
+                        </div>
+                        <form method="post" action="{% url 'follow_user' user.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Suivre</button>
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+        <a href="{% url 'home' %}">Retour à la page d'accueil</a>
+    </div>
+{% endblock %}

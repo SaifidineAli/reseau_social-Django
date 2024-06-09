@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block content %}
+<div class="container my-4">
+    <h1>Fil d'actualités</h1>
+
+    <button type="button" class="btn btn-primary my-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Ajouter un Post
+    </button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Nouveau Post</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="post" action="{% url 'home' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="id_content" class="form-label">Contenu</label>
+                    {{ form.content | add_class:"form-control" }}
+                </div>
+            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary">Publier</button>
+                </div>
+            </form>
+          </div>
+        </div>
+    </div>
+    
+    <!--
+    <ul>
+        {% for post in posts %}
+            <li>
+                <p>{{ post.created_at }}</p>
+                <a href="{% url 'post_detail' post.id %}">{{ post.content }}</a>
+                <small>by {{ post.author.user.username }}</small>
+            </li>
+        {% endfor %}
+    </ul>
+    -->
+
+    <div class="posts">
+        {% for post in posts %}
+            <div class="mb-5">
+                <p>Publication de <strong>{{ post.author.user.username }}</strong> <small>({{ post.created_at }})</small></p>
+                <a href="{% url 'post_detail' post.id %}">{{ post.content }}</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+{% endblock %}
